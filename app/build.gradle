@@ -38,4 +38,7 @@ dependencies {
     //bilibili弹幕
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
+    //绑定资源库
+    implementation 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
 }
