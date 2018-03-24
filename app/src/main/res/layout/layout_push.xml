@@ -97,7 +97,7 @@
                 android:id="@+id/btn_audio_ctrl"
                 android:layout_width="@dimen/live_btn_size"
                 android:layout_height="@dimen/live_btn_size"
-                android:background="@drawable/music_big"
+                android:background="@drawable/mic_normal"
                 android:onClick="onClick"/>
             <TextView
                 android:layout_height="wrap_content"

@@ -12,6 +12,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.Camera"/>
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <!-- 开启闪光灯权限 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
     <application
         android:allowBackup="true"
         android:name=".BaseApplication"
