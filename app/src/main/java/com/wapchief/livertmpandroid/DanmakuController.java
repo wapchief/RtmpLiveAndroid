@@ -59,6 +59,7 @@ public class DanmakuController {
         this.content = content;
     }
 
+    /**初始化弹幕*/
     public void initDanmaKu() {
 
         // 设置最大显示行数
@@ -76,6 +77,7 @@ public class DanmakuController {
                 .setMaximumLines(maxLinesPair)
                 .preventOverlapping(overlappingEnablePair).setDanmakuMargin(40);
         if (mDanmakuView != null) {
+            //本地弹幕资源
             mParser = createParser(content.getResources().openRawResource(R.raw.comments));
             mDanmakuView.setCallback(new master.flame.danmaku.controller.DrawHandler.Callback() {
                 @Override
@@ -228,11 +230,10 @@ public class DanmakuController {
         if (danmaku == null || mDanmakuView == null) {
             return;
         }
-        // for(int i=0;i<100;i++){
-        // }
         danmaku.text = "我："+content + "~来自iPhone X";
         danmaku.padding = 5;
-        danmaku.priority = 1;  // 0可能会被各种过滤器过滤并隐藏显示
+        //可能会被各种过滤器过滤并隐藏显示
+        danmaku.priority = 1;
         danmaku.isLive = islive;
         //设置发送后多久显示
         danmaku.setTime(mDanmakuView.getCurrentTime() + 1500);
@@ -246,6 +247,7 @@ public class DanmakuController {
 
     }
 
+    /**发送其它类型的弹幕*/
     private void addDanmaKuShowTextAndImage(boolean islive) {
         BaseDanmaku danmaku = mContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
         Drawable drawable = content.getResources().getDrawable(R.mipmap.ic_launcher);

@@ -18,7 +18,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tencent.avroom.TXCAVRoom;
 import com.tencent.rtmp.TXLiveBase;
@@ -29,8 +28,6 @@ import com.wapchief.livertmpandroid.utils.TCFrequeControl;
 import com.wapchief.livertmpandroid.views.TCInputTextMsgDialog;
 import com.wapchief.livertmpandroid.views.like.TCHeartLayout;
 
-import java.io.UnsupportedEncodingException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -38,10 +35,12 @@ import master.flame.danmaku.ui.widget.DanmakuView;
 
 /**
  * @author wapchief
+ * 拉流
  */
 public class MainActivity extends AppCompatActivity implements TCInputTextMsgDialog.OnTextSendListener{
 
-    public final static String URL_RTMP = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
+//    public final static String URL_RTMP = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
+    public final static String URL_RTMP = "rtmp://3891.liveplay.myqcloud.com/live/3891_user_11853ca9_a062";
 
 
     @BindView(R.id.video_view)
@@ -136,7 +135,8 @@ public class MainActivity extends AppCompatActivity implements TCInputTextMsgDia
         Log.e("MainActivity", "liteav sdk version is : " + sdkver);
         mTvHostName.setText("用户名");
         mBtnLog.setVisibility(View.GONE);
-        mBtnVodShare.setVisibility(View.GONE);
+        mBtnShare.setVisibility(View.GONE);
+        mBtnRecord.setVisibility(View.GONE);
         mInputTextMsgDialog = new TCInputTextMsgDialog(this, R.style.InputDialog);
         mInputTextMsgDialog.setmOnTextSendListener(this);
         initRtmpPlayer();
@@ -149,7 +149,9 @@ public class MainActivity extends AppCompatActivity implements TCInputTextMsgDia
     private void initDanmaKu() {
         mDanmakuController = new DanmakuController(mDanmakuView, this);
         mDanmakuController.initDanmaKu();
+        //默认不显示
         mDanmakuView.hide();
+        //总开关
         mSwitchBt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -251,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements TCInputTextMsgDia
             case R.id.btn_vod_back:
                 break;
             case R.id.btn_message_input:
+                //发送一条弹幕
                 showInputMsgDialog();
                 break;
                 default:
@@ -311,24 +314,19 @@ public class MainActivity extends AppCompatActivity implements TCInputTextMsgDia
 
     }
 
+    /**发送弹幕后的回调*/
     @Override
     public void onTextSend(String msg, boolean tanmuOpen) {
         if (msg.length() == 0) {
 
             return;
         }
-        try {
-            byte[] byte_num = msg.getBytes("utf8");
-            if (byte_num.length > 160) {
-                Toast.makeText(this, "请输入内容", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return;
+        //关联弹幕总开关
+        if (tanmuOpen) {
+            mDanmakuView.show();
+            mSwitchBt.setChecked(true);
         }
-
-        //消息回显
+        //消息显示
         mDanmakuController.addDanmaku(tanmuOpen,msg);
     }
 }
