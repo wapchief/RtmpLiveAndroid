@@ -2,6 +2,7 @@ package com.wapchief.livertmpandroid;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 /**
  * @author wapchief
@@ -16,6 +17,13 @@ public class BaseApplication extends Application{
         super.onCreate();
         mApplication = this;
 
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     public static Context getApplication() {
